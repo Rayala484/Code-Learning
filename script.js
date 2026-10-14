@@ -1,13 +1,64 @@
 (() => {
   const WHATSAPP_NUMBER = "918500386916";
+  const COURSES = window.GX_COURSES || [];
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const feeText = (c) => c.fee || "Call for fee";
+  const durationText = (c) => c.duration || "Call for details";
 
-  // Sticky nav state
+  // ---------- Render courses ----------
+  const grid = document.getElementById("courseGrid");
+  grid.innerHTML = COURSES.map((c) => `
+    <article class="card${c.featured ? " card--feature" : ""} reveal" data-cat="${c.cat}">
+      <div class="card__top">
+        ${c.tag ? `<span class="tag">${esc(c.tag)}</span>` : ""}
+        <span class="card__ico" aria-hidden="true">${c.icon}</span>
+      </div>
+      <span class="card__cat">${esc(c.catLabel)}</span>
+      <h3>${esc(c.title)}</h3>
+      <p>${esc(c.short)}</p>
+      ${c.featured ? `<ul class="card__list">${c.learn.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>` : ""}
+      <div class="card__meta">
+        <span>${esc(c.format)}</span>
+        <span class="card__fee">${esc(feeText(c))}</span>
+      </div>
+      <div class="card__actions">
+        <button type="button" class="card__btn" data-details="${c.id}">View details</button>
+        <a href="#contact" class="card__link" data-course="${esc(c.title)}">Enquire →</a>
+      </div>
+    </article>`).join("") + `
+    <article class="card card--cta reveal" data-cat="all">
+      <span class="card__ico" aria-hidden="true">🤝</span>
+      <h3>Not sure which course is right for you?</h3>
+      <p>Talk to our counsellor — we’ll guide you based on your goal, budget and experience.</p>
+      <div class="card__actions">
+        <a href="tel:+918500386916" class="btn btn--gold btn--sm">Call now</a>
+        <a href="#contact" class="card__link" data-course="Not sure yet — need guidance">Enquire →</a>
+      </div>
+    </article>`;
+
+  // ---------- Render fee table ----------
+  document.getElementById("feeRows").innerHTML = COURSES.map((c) => `
+    <div class="fees__row">
+      <span class="fees__course"><i aria-hidden="true">${c.icon}</i>${esc(c.title)}</span>
+      <span data-label="Format">${esc(c.format)}</span>
+      <span data-label="Duration">${esc(durationText(c))}</span>
+      <span data-label="Fee" class="fees__fee${c.fee ? "" : " is-ask"}">${esc(feeText(c))}</span>
+      <span><a href="#contact" class="btn btn--ghost btn--sm" data-course="${esc(c.title)}">Enquire</a></span>
+    </div>`).join("");
+
+  // ---------- Course select in the form ----------
+  const courseSelect = document.getElementById("courseSelect");
+  courseSelect.innerHTML =
+    COURSES.map((c) => `<option>${esc(c.title)}</option>`).join("") +
+    `<option>Society Membership</option><option>Not sure yet — need guidance</option>`;
+
+  // ---------- Sticky nav ----------
   const nav = document.querySelector(".nav");
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 10);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 
-  // Mobile menu
+  // ---------- Mobile menu ----------
   const toggle = document.getElementById("navToggle");
   const links = document.getElementById("navLinks");
   const setMenu = (open) => {
@@ -19,117 +70,146 @@
   links.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
   document.addEventListener("keydown", (e) => e.key === "Escape" && setMenu(false));
 
-  // Scroll reveal with stagger
+  // ---------- Scroll reveal ----------
   const reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const siblings = [...entry.target.parentElement.children].filter((el) => el.classList.contains("reveal"));
-          entry.target.style.transitionDelay = `${Math.min(siblings.indexOf(entry.target), 6) * 70}ms`;
-          entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
-    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const siblings = [...entry.target.parentElement.children].filter((el) => el.classList.contains("reveal"));
+        entry.target.style.transitionDelay = `${Math.min(siblings.indexOf(entry.target), 6) * 70}ms`;
+        entry.target.classList.add("is-visible");
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
 
-  // Animated counters
-  const counters = document.querySelectorAll("[data-count]");
-  const animateCount = (el) => {
-    const target = Number(el.dataset.count);
-    const prefix = el.dataset.prefix || "";
-    const suffix = el.dataset.suffix || "";
-    const start = performance.now();
-    const duration = 1400;
-    const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = `${prefix}${Math.round(target * eased)}${suffix}`;
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  if ("IntersectionObserver" in window) {
-    const cio = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          animateCount(e.target);
-          cio.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counters.forEach((c) => cio.observe(c));
-  } else {
-    counters.forEach(animateCount);
-  }
-
-  // Course filters
+  // ---------- Course filters ----------
   const filters = document.querySelectorAll(".filter");
-  const cards = document.querySelectorAll(".bento .card");
-  filters.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      filters.forEach((b) => {
-        b.classList.toggle("is-active", b === btn);
-        b.setAttribute("aria-selected", String(b === btn));
-      });
-      const f = btn.dataset.filter;
-      cards.forEach((card) => card.classList.toggle("is-hidden", f !== "all" && card.dataset.cat !== f));
-    })
-  );
+  const cards = grid.querySelectorAll(".card:not(.card--cta)");
+  filters.forEach((btn) => btn.addEventListener("click", () => {
+    filters.forEach((b) => {
+      b.classList.toggle("is-active", b === btn);
+      b.setAttribute("aria-pressed", String(b === btn));
+    });
+    const f = btn.dataset.filter;
+    cards.forEach((card) => {
+      const show = f === "all" || card.dataset.cat === f;
+      card.classList.toggle("is-hidden", !show);
+      if (show) card.classList.add("is-visible");
+    });
+  }));
 
-  // Cursor spotlight on cards
-  cards.forEach((card) =>
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty("--mx", `${e.clientX - r.left}px`);
-      card.style.setProperty("--my", `${e.clientY - r.top}px`);
-    })
-  );
+  // Cursor spotlight
+  cards.forEach((card) => card.addEventListener("pointermove", (e) => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    card.style.setProperty("--my", `${e.clientY - r.top}px`);
+  }));
 
-  // "Enquire" links preselect the course in the form
-  const courseSelect = document.getElementById("courseSelect");
-  document.querySelectorAll("[data-course]").forEach((el) =>
-    el.addEventListener("click", () => {
-      const match = [...courseSelect.options].find((o) => o.value === el.dataset.course);
-      if (match) courseSelect.value = match.value;
-    })
-  );
+  // ---------- Pre-select course when "Enquire" is clicked ----------
+  const preselect = (name) => {
+    const match = [...courseSelect.options].find((o) => o.value === name);
+    if (match) courseSelect.value = match.value;
+  };
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-course]");
+    if (el) preselect(el.dataset.course);
+  });
 
-  // Enquiry form -> WhatsApp
+  // ---------- Course details modal ----------
+  const modal = document.getElementById("courseModal");
+  const openModal = (id) => {
+    const c = COURSES.find((x) => x.id === id);
+    if (!c) return;
+    document.getElementById("modalIco").textContent = c.icon;
+    document.getElementById("modalCat").textContent = c.catLabel;
+    document.getElementById("modalTitle").textContent = c.title;
+    document.getElementById("modalDesc").textContent = c.desc;
+    document.getElementById("modalMeta").innerHTML = `
+      <div><small>Format</small><b>${esc(c.format)}</b></div>
+      <div><small>Duration</small><b>${esc(durationText(c))}</b></div>
+      <div><small>Fee</small><b>${esc(feeText(c))}</b></div>
+      <div><small>Certificate</small><b>Yes</b></div>`;
+    document.getElementById("modalList").innerHTML = c.learn.map((l) => `<li>${esc(l)}</li>`).join("");
+    document.getElementById("modalFor").textContent = c.forWho;
+    document.getElementById("modalEnquire").dataset.course = c.title;
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    document.body.classList.add("modal-open");
+  };
+  const closeModal = () => {
+    if (typeof modal.close === "function") modal.close();
+    else modal.removeAttribute("open");
+  };
+  modal.addEventListener("close", () => document.body.classList.remove("modal-open"));
+  grid.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-details]");
+    if (btn) openModal(btn.dataset.details);
+  });
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal || e.target.closest("[data-close]")) closeModal();
+  });
+
+  // ---------- Enquiry form (Netlify Forms, WhatsApp fallback) ----------
   const form = document.getElementById("enquiryForm");
-  const errorEl = document.getElementById("formError");
-  form.addEventListener("submit", (e) => {
+  const statusEl = document.getElementById("formStatus");
+  const submitBtn = document.getElementById("formSubmit");
+
+  const whatsappLink = (data) => {
+    const lines = [
+      "Hi GoldXpert Academy! I'd like to enquire.",
+      `Name: ${data.get("name")}`,
+      `Phone: ${data.get("phone")}`,
+      data.get("city") ? `City: ${data.get("city")}` : "",
+      `Interested in: ${data.get("course")}`,
+      data.get("message") ? `Message: ${data.get("message")}` : "",
+    ].filter(Boolean);
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+  };
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = new FormData(form);
     const name = String(data.get("name") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const digits = phone.replace(/\D/g, "");
-
+    const digits = String(data.get("phone") || "").replace(/\D/g, "");
     form.name.classList.toggle("is-invalid", !name);
     form.phone.classList.toggle("is-invalid", digits.length < 10);
     if (!name || digits.length < 10) {
-      errorEl.textContent = "Please enter your name and a valid phone number.";
+      statusEl.className = "form__status is-error";
+      statusEl.textContent = "Please enter your name and a valid 10-digit phone number.";
       return;
     }
-    errorEl.textContent = "";
 
-    const lines = [
-      "Hi GoldXpert Academy! I'd like to enquire.",
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      `Interested in: ${data.get("course")}`,
-    ];
-    const message = String(data.get("message") || "").trim();
-    if (message) lines.push(`Message: ${message}`);
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+    statusEl.className = "form__status";
+    statusEl.textContent = "";
+    const wa = whatsappLink(data);
 
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
-    form.reset();
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data).toString(),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      statusEl.className = "form__status is-success";
+      statusEl.innerHTML = `Thank you, ${esc(name)}! We’ve received your enquiry and will call you soon. ` +
+        `<a href="${wa}" target="_blank" rel="noopener">Want a faster reply? Message us on WhatsApp →</a>`;
+      form.reset();
+    } catch {
+      // Not hosted on Netlify (or offline): hand the enquiry over to WhatsApp instead.
+      statusEl.className = "form__status is-success";
+      statusEl.innerHTML = `Opening WhatsApp to send your enquiry… <a href="${wa}" target="_blank" rel="noopener">Tap here if it didn’t open.</a>`;
+      window.open(wa, "_blank", "noopener");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Enquiry";
+    }
   });
 
   document.getElementById("year").textContent = new Date().getFullYear();
