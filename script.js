@@ -261,7 +261,23 @@
       steps[i].classList.add("is-reached");
     };
 
+    let seq = null;
+    let playing = false;
+
+    // Empty the line and the circles so the flow can start again from step 1.
+    const resetFlow = () => {
+      if (seq) { seq.kill(); seq = null; }
+      playing = false;
+      progress = 0;
+      render();
+      fill.classList.remove("is-flowing");
+      dots.forEach((d) => d.classList.remove("is-filled"));
+      steps.forEach((s) => s.classList.remove("is-reached"));
+    };
+
     const run = () => {
+      resetFlow();
+      playing = true;
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (reduce || typeof window.gsap === "undefined") {
         progress = dots.length - 1;
@@ -270,7 +286,7 @@
         return;
       }
       const state = { p: 0 };
-      const seq = window.gsap.timeline({ delay: 0.5 });
+      seq = window.gsap.timeline({ delay: 0.5 });
       seq.call(() => { fill.classList.add("is-flowing"); fillStep(0); });
       for (let i = 1; i < dots.length; i++) {
         seq.to(state, {
@@ -289,9 +305,13 @@
     window.addEventListener("load", layout);
     document.addEventListener("gx:introdone", layout);
     if ("IntersectionObserver" in window) {
+      // Play every time the section comes into view; reset once it has fully left the screen.
       const tio = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) { tio.disconnect(); run(); }
-      }, { threshold: 0.45 });
+        entries.forEach((e) => {
+          if (e.intersectionRatio >= 0.45 && !playing) run();
+          else if (!e.isIntersecting && playing) resetFlow();
+        });
+      }, { threshold: [0, 0.45] });
       tio.observe(tlWrap);
     } else {
       run();
