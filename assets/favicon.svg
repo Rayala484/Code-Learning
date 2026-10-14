@@ -5,7 +5,7 @@
   <circle r="160" fill="#F7941D" opacity=".18"/>
   <circle r="125" fill="#005A80"/>
   <g fill="none" stroke="url(#r)" stroke-width="22">
-    <circle cx="-30" cy="5" r="80"/><circle cx="30" cy="-3" r="80"/>
+    <circle cx="-32" cy="0" r="80"/><circle cx="32" cy="0" r="80"/>
   </g>
-  <text x="-2" y="20" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="56" fill="#fff">GX</text>
+  <text x="0" y="20" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="56" fill="#fff">GX</text>
 </svg>

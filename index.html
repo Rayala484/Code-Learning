@@ -57,14 +57,14 @@
         </g>
         <circle r="95" fill="url(#gxDisc)" />
         <g fill="none" stroke="url(#gxRing)" stroke-width="15">
-          <circle cx="-25" cy="4" r="66" />
-          <circle cx="25" cy="-2" r="66" />
-          <circle cx="-25" cy="4" r="66" clip-path="url(#gxCross)" />
+          <circle cx="-26" cy="0" r="66" />
+          <circle cx="26" cy="0" r="66" />
+          <circle cx="-26" cy="0" r="66" clip-path="url(#gxCross)" />
         </g>
         <g fill="none" stroke="#7A3E00" stroke-opacity=".35" stroke-width="1.2">
-          <circle cx="-25" cy="4" r="73.5" /><circle cx="25" cy="-2" r="73.5" />
+          <circle cx="-26" cy="0" r="73.5" /><circle cx="26" cy="0" r="73.5" />
         </g>
-        <text x="-2" y="15" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#fff">GX</text>
+        <text x="0" y="14" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#fff">GX</text>
       </symbol>
     </defs>
   </svg>
@@ -137,9 +137,9 @@
           <!-- shape of the mold cavities (for the shine sweep) -->
           <mask id="cavityMask" maskUnits="userSpaceOnUse" x="-200" y="-200" width="400" height="400">
             <g fill="none" stroke="#fff" stroke-width="15">
-              <circle cx="-25" cy="4" r="66" /><circle cx="25" cy="-2" r="66" />
+              <circle cx="-26" cy="0" r="66" /><circle cx="26" cy="0" r="66" />
             </g>
-            <text x="-2" y="15" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#fff">GX</text>
+            <text x="0" y="14" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#fff">GX</text>
           </mask>
         </defs>
 
@@ -157,29 +157,29 @@
           <!-- empty cavities: engraved channels in the mold -->
           <g id="cavities">
             <g fill="none" stroke="#011824" stroke-width="15">
-              <circle cx="-25" cy="4" r="66" /><circle cx="25" cy="-2" r="66" />
+              <circle cx="-26" cy="0" r="66" /><circle cx="26" cy="0" r="66" />
             </g>
             <g fill="none" stroke="#3FA9D6" stroke-opacity=".35" stroke-width="1">
-              <circle cx="-25" cy="4" r="73.5" /><circle cx="25" cy="-2" r="73.5" />
-              <circle cx="-25" cy="4" r="58.5" /><circle cx="25" cy="-2" r="58.5" />
+              <circle cx="-26" cy="0" r="73.5" /><circle cx="26" cy="0" r="73.5" />
+              <circle cx="-26" cy="0" r="58.5" /><circle cx="26" cy="0" r="58.5" />
             </g>
-            <text x="-2" y="15" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#011824" stroke="#3FA9D6" stroke-opacity=".35" stroke-width="1">GX</text>
+            <text x="0" y="14" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="#011824" stroke="#3FA9D6" stroke-opacity=".35" stroke-width="1">GX</text>
           </g>
 
           <!-- liquid gold filling the cavities -->
           <g mask="url(#fillMask)">
             <g id="liquidCool">
               <g fill="none" stroke="url(#gxRing)" stroke-width="15">
-                <circle cx="-25" cy="4" r="66" /><circle cx="25" cy="-2" r="66" />
-                <circle cx="-25" cy="4" r="66" clip-path="url(#gxCross)" />
+                <circle cx="-26" cy="0" r="66" /><circle cx="26" cy="0" r="66" />
+                <circle cx="-26" cy="0" r="66" clip-path="url(#gxCross)" />
               </g>
-              <text x="-2" y="15" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="url(#gxRing)">GX</text>
+              <text x="0" y="14" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="url(#gxRing)">GX</text>
             </g>
             <g id="liquidHot" filter="url(#moltenGlow)">
               <g fill="none" stroke="url(#liquidHot)" stroke-width="15">
-                <circle cx="-25" cy="4" r="66" /><circle cx="25" cy="-2" r="66" />
+                <circle cx="-26" cy="0" r="66" /><circle cx="26" cy="0" r="66" />
               </g>
-              <text x="-2" y="15" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="url(#liquidHot)">GX</text>
+              <text x="0" y="14" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="40" fill="url(#liquidHot)">GX</text>
             </g>
           </g>
 
@@ -317,7 +317,7 @@
       <div class="container about">
         <div class="about__copy reveal">
           <span class="eyebrow">Our Mission</span>
-          <h2>Creating confident, skilled &amp; <em class="text-gold">responsible</em> gold professionals</h2>
+          <h2>Creating confident, skilled &amp; responsible <em class="text-gold">gold</em> professionals</h2>
           <p>
             Our mission is to provide high-quality, practical and industry-relevant training that empowers individuals to
             succeed in the gold, jewellery and precious metals sector. We deliver accurate knowledge, ethical guidance and
@@ -446,6 +446,8 @@
           <span class="eyebrow">From Learning to Earning</span>
           <h2>Your path to a <em class="text-gold">golden career</em></h2>
         </div>
+        <div class="timeline-wrap" id="timelineWrap">
+        <div class="timeline__track" aria-hidden="true"><div class="timeline__fill" id="timelineFill"><span class="timeline__drop"></span></div></div>
         <ol class="timeline">
           <li class="step reveal"><span class="step__n">01</span><h4>Counselling</h4><p>Call us and choose the right course for your goal.</p></li>
           <li class="step reveal"><span class="step__n">02</span><h4>Learn</h4><p>Structured classes on concepts, standards and methods.</p></li>
@@ -453,6 +455,7 @@
           <li class="step reveal"><span class="step__n">04</span><h4>Get Certified</h4><p>Clear your assessment and receive your certificate.</p></li>
           <li class="step reveal"><span class="step__n">05</span><h4>Earn &amp; Grow</h4><p>Get hired or launch your own gold business.</p></li>
         </ol>
+        </div>
       </div>
     </section>
 

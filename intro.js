@@ -95,9 +95,9 @@
       );
     });
     // flowing highlight inside the stream
-    loops.push(gsap.to("#streamFlow", { attr: { "stroke-dashoffset": -44 }, duration: 0.3, repeat: -1, ease: "none" }));
+    loops.push(gsap.to("#streamFlow", { attr: { "stroke-dashoffset": -44 }, duration: 0.55, repeat: -1, ease: "none" }));
     // liquid surface waves
-    loops.push(gsap.to("#fillWave", { x: -50, duration: 0.7, repeat: -1, ease: "none" }));
+    loops.push(gsap.to("#fillWave", { x: -50, duration: 1.1, repeat: -1, ease: "none" }));
     // splashes where the gold enters the mold
     splash.querySelectorAll("circle").forEach((c) => {
       loops.push(
@@ -127,7 +127,7 @@
     gsap.set("#moldFlash", { opacity: 0, scale: 0.8, transformOrigin: "50% 50%" });
     gsap.set("#shine", { attr: { x: -260 }, opacity: 0 });
     gsap.set("#introRays line", { attr: { y2: -112 }, opacity: 0 });
-    gsap.set("#introWord", { opacity: 0, y: 24 });
+    gsap.set("#introWord", { opacity: 0, y: 18, filter: "blur(6px)" });
     gsap.set(status, { opacity: 1 });
     setStatus("Heating raw gold…");
   }
@@ -153,48 +153,48 @@
 
     // 3 — melting: the bar slumps into a funnel and starts to drip
       .call(() => setStatus("Melting…"), null, 1.5)
-      .to(".bar-shape", { attr: { d: MELT }, duration: 1.1, ease: "power2.in" }, 1.6)
+      .to(".bar-shape", { attr: { d: MELT }, duration: 1.2, ease: "power2.in" }, 1.6)
       .to("#barTop", { opacity: 0, y: 14, duration: 0.6 }, 1.6)
 
-    // 4 — pouring: a bright stream runs into the GX mold
-      .to("#stream", { attr: { height: MOLD_ENTRY - STREAM_TOP }, duration: 0.45, ease: "power1.in" }, 2.45)
-      .to("#streamFlow", { attr: { y2: MOLD_ENTRY }, duration: 0.45, ease: "power1.in" }, 2.45)
+    // 4 — pouring: a bright stream slowly falls into the GX mold
       .call(() => setStatus("Pouring into the GX mold…"), null, 2.6)
-      .to("#splash", { opacity: 1, duration: 0.2 }, 2.85)
+      .to("#stream", { attr: { height: MOLD_ENTRY - STREAM_TOP }, duration: 1.2, ease: "sine.in" }, 2.6)
+      .to("#streamFlow", { attr: { y2: MOLD_ENTRY }, duration: 1.2, ease: "sine.in" }, 2.6)
+      .to("#splash", { opacity: 1, duration: 0.3 }, 3.75)
 
-    // 5 — filling: liquid gold rises through the rings and the letters
-      .to("#fillLevel", { y: FILL_END, duration: 2.0, ease: "sine.inOut" }, 2.85)
-      .to(".bar-shape", { attr: { d: DROP }, duration: 1.2, ease: "power1.in" }, 2.8)
-      .to("#barGroup", { opacity: 0, duration: 0.4 }, 3.9)
-      .to("#furnaceGlow", { opacity: 0, duration: 0.8 }, 3.9)
-      .to("#embers", { opacity: 0, duration: 0.6 }, 3.9)
+    // 5 — filling: liquid gold slowly rises through the rings and the letters
+      .to("#fillLevel", { y: FILL_END, duration: 4.2, ease: "sine.inOut" }, 3.8)
+      .to(".bar-shape", { attr: { d: DROP }, duration: 2.6, ease: "power1.in" }, 3.8)
+      .to("#barGroup", { opacity: 0, duration: 0.6 }, 6.6)
+      .to("#furnaceGlow", { opacity: 0, duration: 1 }, 6.4)
+      .to("#embers", { opacity: 0, duration: 0.8 }, 6.4)
 
     // 6 — the stream runs dry
-      .to("#stream", { attr: { y: MOLD_ENTRY, height: 0 }, duration: 0.45, ease: "power1.in" }, 4.45)
-      .to("#streamFlow", { attr: { y1: MOLD_ENTRY }, opacity: 0, duration: 0.45 }, 4.45)
-      .to("#splash", { opacity: 0, duration: 0.3 }, 4.75)
+      .to("#stream", { attr: { y: MOLD_ENTRY, height: 0 }, duration: 0.8, ease: "power1.in" }, 7.3)
+      .to("#streamFlow", { attr: { y1: MOLD_ENTRY }, opacity: 0, duration: 0.8 }, 7.3)
+      .to("#splash", { opacity: 0, duration: 0.4 }, 7.9)
 
     // 7 — the gold cools, flashes and shines
-      .to(status, { opacity: 0, duration: 0.4 }, 4.8)
-      .to("#cavities", { opacity: 0, duration: 0.6 }, 4.9)
-      .to("#liquidHot", { opacity: 0, duration: 1.2 }, 4.9)
-      .to("#moldFlash", { opacity: 1, scale: 1.15, duration: 0.35, ease: "power2.out" }, 5.0)
-      .to("#moldFlash", { opacity: 0, duration: 0.9 }, 5.35)
-      .to("#shine", { opacity: 1, duration: 0.1 }, 5.1)
-      .to("#shine", { attr: { x: 230 }, duration: 0.9, ease: "power2.inOut" }, 5.1)
+      .to(status, { opacity: 0, duration: 0.4 }, 8.0)
+      .to("#cavities", { opacity: 0, duration: 0.6 }, 8.1)
+      .to("#liquidHot", { opacity: 0, duration: 1.3 }, 8.1)
+      .to("#moldFlash", { opacity: 1, scale: 1.15, duration: 0.4, ease: "power2.out" }, 8.2)
+      .to("#moldFlash", { opacity: 0, duration: 1 }, 8.6)
+      .to("#shine", { opacity: 1, duration: 0.1 }, 8.3)
+      .to("#shine", { attr: { x: 230 }, duration: 1.1, ease: "power2.inOut" }, 8.3)
 
-    // 8 — sun rays burst out, wordmark appears
+    // 8 — sun rays burst out, wordmark softly appears
       .to("#introRays line", {
         attr: { y2: (i, el) => Number(el.dataset.len) },
         opacity: 1,
-        duration: 0.5,
-        ease: "back.out(2.2)",
-        stagger: 0.022,
-      }, 5.2)
-      .to("#introWord", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 5.6)
+        duration: 0.55,
+        ease: "back.out(2)",
+        stagger: 0.025,
+      }, 8.4)
+      .to("#introWord", { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "power2.out" }, 8.9)
 
     // 9 — reveal the website
-      .to(intro, { opacity: 0, duration: 0.8, ease: "power2.inOut" }, 7.1);
+      .to(intro, { opacity: 0, duration: 0.9, ease: "power2.inOut" }, 10.6);
   }
 
   function skip() {
@@ -217,7 +217,7 @@
   }
 
   // Safety net: never trap the visitor behind the intro.
-  setTimeout(() => { if (!finished && (!tl || !tl.isActive())) finish(); }, 12000);
+  setTimeout(() => { if (!finished && (!tl || !tl.isActive())) finish(); }, 16000);
 
   play();
 })();

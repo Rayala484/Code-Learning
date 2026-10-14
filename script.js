@@ -77,9 +77,15 @@
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const siblings = [...entry.target.parentElement.children].filter((el) => el.classList.contains("reveal"));
-        entry.target.style.transitionDelay = `${Math.min(siblings.indexOf(entry.target), 6) * 70}ms`;
+        const delay = Math.min(siblings.indexOf(entry.target), 6) * 70;
+        entry.target.style.transitionDelay = `${delay}ms`;
         entry.target.classList.add("is-visible");
         io.unobserve(entry.target);
+        // Once revealed, drop the reveal styles so hover effects respond instantly.
+        setTimeout(() => {
+          entry.target.classList.remove("reveal", "is-visible");
+          entry.target.style.transitionDelay = "";
+        }, 1000 + delay);
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
     reveals.forEach((el) => io.observe(el));
@@ -211,6 +217,86 @@
       submitBtn.textContent = "Submit Enquiry";
     }
   });
+
+  // ---------- "Your path" timeline: liquid gold flows from 1 to 5 ----------
+  const tlWrap = document.getElementById("timelineWrap");
+  if (tlWrap) {
+    const track = tlWrap.querySelector(".timeline__track");
+    const fill = document.getElementById("timelineFill");
+    const steps = [...tlWrap.querySelectorAll(".step")];
+    const dots = steps.map((s) => s.querySelector(".step__n"));
+    let progress = 0; // 0 → at step 1, 4 → at step 5
+    let vertical = false;
+
+    // Circle centres relative to the wrapper (offsets ignore the reveal transforms).
+    const centres = () => dots.map((d) => {
+      let x = d.offsetWidth / 2, y = d.offsetHeight / 2, el = d;
+      while (el && el !== tlWrap) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+      return { x, y };
+    });
+
+    const render = () => {
+      const cs = centres();
+      const i = Math.min(Math.floor(progress), cs.length - 2);
+      const f = progress - i;
+      const axis = vertical ? "y" : "x";
+      const len = cs[i][axis] + (cs[i + 1][axis] - cs[i][axis]) * f - cs[0][axis];
+      if (vertical) { fill.style.height = `${len}px`; fill.style.width = ""; }
+      else { fill.style.width = `${len}px`; fill.style.height = ""; }
+    };
+
+    const layout = () => {
+      const cs = centres();
+      const first = cs[0], last = cs[cs.length - 1];
+      vertical = Math.abs(cs[1].y - first.y) > Math.abs(cs[1].x - first.x);
+      tlWrap.classList.toggle("is-vertical", vertical);
+      Object.assign(track.style, vertical
+        ? { left: `${first.x - 2}px`, top: `${first.y}px`, width: "4px", height: `${last.y - first.y}px` }
+        : { left: `${first.x}px`, top: `${first.y - 2}px`, width: `${last.x - first.x}px`, height: "4px" });
+      render();
+    };
+
+    const fillStep = (i) => {
+      dots[i].classList.add("is-filled");
+      steps[i].classList.add("is-reached");
+    };
+
+    const run = () => {
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || typeof window.gsap === "undefined") {
+        progress = dots.length - 1;
+        render();
+        dots.forEach((_, i) => fillStep(i));
+        return;
+      }
+      const state = { p: 0 };
+      const seq = window.gsap.timeline({ delay: 0.5 });
+      seq.call(() => { fill.classList.add("is-flowing"); fillStep(0); });
+      for (let i = 1; i < dots.length; i++) {
+        seq.to(state, {
+          p: i,
+          duration: 1.1,
+          ease: "sine.inOut",
+          onUpdate: () => { progress = state.p; render(); },
+        }, "+=0.55");
+        seq.call(() => fillStep(i));
+      }
+      seq.call(() => fill.classList.remove("is-flowing"), null, "+=0.4");
+    };
+
+    layout();
+    window.addEventListener("resize", layout);
+    window.addEventListener("load", layout);
+    document.addEventListener("gx:introdone", layout);
+    if ("IntersectionObserver" in window) {
+      const tio = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { tio.disconnect(); run(); }
+      }, { threshold: 0.45 });
+      tio.observe(tlWrap);
+    } else {
+      run();
+    }
+  }
 
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
