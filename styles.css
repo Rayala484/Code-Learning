@@ -695,7 +695,7 @@ html[lang="en"] .show-te, html[lang="te"] .show-en { display: none; }
   color-scheme: light;
 }
 /* sections that keep the dark navy look inside light mode */
-[data-theme="light"] :is(.intro, .membership, .footer) {
+[data-theme="light"] :is(.intro, .membership, .band) {
   --bg: #04131b; --bg-2: #071e2a;
   --surface: rgba(255, 255, 255, 0.035); --surface-2: rgba(255, 255, 255, 0.07);
   --border: rgba(255, 214, 140, 0.13); --border-strong: rgba(255, 181, 71, 0.4);
@@ -704,7 +704,6 @@ html[lang="en"] .show-te, html[lang="te"] .show-en { display: none; }
   --green: #1fbf6e;
   color: var(--text);
 }
-[data-theme="light"] .footer { background: linear-gradient(180deg, #072230, #04131b); border-top-color: transparent; }
 
 [data-theme="light"] .bg-glow {
   background:
@@ -743,7 +742,7 @@ html[lang="en"] .show-te, html[lang="te"] .show-en { display: none; }
 [data-theme="light"] .card--cta { background: linear-gradient(140deg, rgba(0, 90, 128, 0.12), rgba(0, 90, 128, 0.03)), #ffffff; border-color: rgba(10, 111, 154, 0.3); }
 [data-theme="light"] .card__meta span { background: var(--bg); }
 [data-theme="light"] .aud span { background: rgba(0, 90, 128, 0.09); border-color: rgba(0, 90, 128, 0.2); }
-[data-theme="light"] .section--alt { background: linear-gradient(180deg, transparent, rgba(0, 90, 128, 0.05) 15%, rgba(0, 90, 128, 0.05) 85%, transparent); }
+[data-theme="light"] .section--alt { background: linear-gradient(180deg, #f4ead8, #f8f1e4); }
 [data-theme="light"] .marquee { background: linear-gradient(90deg, rgba(247, 148, 29, 0.10), rgba(0, 90, 128, 0.07)); }
 [data-theme="light"] .fees { background: #ffffff; box-shadow: 0 16px 40px -28px rgba(16, 41, 58, 0.3); }
 [data-theme="light"] .fees__row--head { background: linear-gradient(90deg, rgba(247, 148, 29, 0.16), rgba(0, 90, 128, 0.10)); }
@@ -776,3 +775,69 @@ html[lang="te"] :is(.eyebrow, .card__cat, .fees__row--head, .footer__grid h5, .m
 html[lang="te"] .nav__links a { font-size: 13.5px; padding: 8px 8px; }
 html[lang="te"] .nav__actions .btn--sm { font-size: 13px; padding: 10px 14px; }
 html[lang="te"] .btn { white-space: normal; text-align: center; line-height: 1.3; }
+
+/* =========================================================
+   LIGHT THEME — alternating dark & light bands (premium jewellery style)
+   Hero, Courses and Journey are rich navy bands; the rest is ivory.
+   ========================================================= */
+[data-theme="light"] .band--hero {
+  background:
+    radial-gradient(60% 80% at 85% 20%, rgba(247, 148, 29, 0.22), transparent 60%),
+    radial-gradient(50% 70% at 0% 100%, rgba(0, 90, 128, 0.55), transparent 65%),
+    linear-gradient(160deg, #062a3a 0%, #04192a 55%, #031119 100%);
+}
+[data-theme="light"] .band--courses {
+  background:
+    radial-gradient(50% 40% at 100% 0%, rgba(247, 148, 29, 0.14), transparent 60%),
+    radial-gradient(60% 50% at 0% 100%, rgba(0, 90, 128, 0.35), transparent 60%),
+    linear-gradient(180deg, #05202c, #041520);
+}
+[data-theme="light"] .band--journey {
+  background:
+    radial-gradient(60% 60% at 50% 0%, rgba(247, 148, 29, 0.14), transparent 60%),
+    linear-gradient(180deg, #06293a, #04182a);
+}
+[data-theme="light"] .band .text-gold { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-theme="light"] .band :is(.hero-badge, .card) { box-shadow: none; }
+[data-theme="light"] .band .hero-badge { background: linear-gradient(160deg, rgba(10, 42, 58, 0.9), rgba(5, 23, 32, 0.85)); }
+[data-theme="light"] .band .card { background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015)); }
+[data-theme="light"] .band .card--feature {
+  background:
+    radial-gradient(120% 80% at 100% 0%, rgba(247, 148, 29, 0.22), transparent 55%),
+    radial-gradient(100% 80% at 0% 100%, rgba(0, 90, 128, 0.35), transparent 60%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.015));
+}
+[data-theme="light"] .band .card--cta { background: linear-gradient(140deg, rgba(0, 90, 128, 0.55), rgba(0, 90, 128, 0.15)); border-color: rgba(11, 133, 184, 0.4); }
+[data-theme="light"] .band .card__meta span { background: var(--surface-2); }
+[data-theme="light"] .band .step__n { background: var(--bg-2); }
+[data-theme="light"] .band .timeline__track { background: rgba(255, 181, 71, 0.14); }
+[data-theme="light"] .band .hero__emblem { filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5)); }
+[data-theme="light"] .band .hero__halo { opacity: 1; }
+[data-theme="light"] .band :is(.card, .hero-badge):hover {
+  box-shadow: 0 24px 44px -20px rgba(0, 0, 0, 0.7), 0 12px 32px -14px rgba(247, 148, 29, 0.4);
+}
+/* the strip of course names becomes a polished gold ribbon between the dark hero and the ivory sections */
+[data-theme="light"] .marquee {
+  background: linear-gradient(90deg, #f7b04a, #ffd27a 30%, #f7a12a 65%, #e88a12);
+  border-color: transparent; color: #2a1500;
+  box-shadow: 0 10px 30px -18px rgba(214, 140, 30, 0.8);
+}
+[data-theme="light"] .marquee__track i { color: #005a80; }
+
+/* =========================================================
+   FOOTER — logo teal-blue in every theme
+   ========================================================= */
+.footer {
+  --text: #ffffff;
+  --muted: rgba(226, 240, 247, 0.82);
+  --gold-2: #ffc56b;
+  --border: rgba(255, 255, 255, 0.16);
+  position: relative; color: var(--text); border-top: 0;
+  background:
+    radial-gradient(45% 80% at 100% 0%, rgba(247, 148, 29, 0.18), transparent 60%),
+    radial-gradient(40% 70% at 0% 100%, rgba(0, 40, 60, 0.45), transparent 60%),
+    linear-gradient(160deg, #006a96 0%, #005a80 45%, #00476a 100%);
+}
+.footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--gold-grad); }
+.footer__grid a:hover { color: #ffd27a; }
+.footer .linklike:hover { color: #ffd27a; }
