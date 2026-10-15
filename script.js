@@ -4,6 +4,8 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const feeText = (c) => c.fee || "Call for fee";
   const durationText = (c) => c.duration || "Call for details";
+  // Translate an element into the visitor's chosen language (English text is the source).
+  const tr = (el) => { if (window.GX_I18N) window.GX_I18N.apply(el); };
 
   // ---------- Render courses ----------
   const grid = document.getElementById("courseGrid");
@@ -49,8 +51,9 @@
   // ---------- Course select in the form ----------
   const courseSelect = document.getElementById("courseSelect");
   courseSelect.innerHTML =
-    COURSES.map((c) => `<option>${esc(c.title)}</option>`).join("") +
-    `<option>Society Membership</option><option>Not sure yet — need guidance</option>`;
+    COURSES.map((c) => `<option value="${esc(c.title)}">${esc(c.title)}</option>`).join("") +
+    `<option value="Society Membership">Society Membership</option>` +
+    `<option value="Not sure yet — need guidance">Not sure yet — need guidance</option>`;
 
   // ---------- Sticky nav ----------
   const nav = document.querySelector(".nav");
@@ -65,6 +68,7 @@
     links.classList.toggle("is-open", open);
     toggle.setAttribute("aria-expanded", String(open));
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    tr(toggle);
   };
   toggle.addEventListener("click", () => setMenu(!links.classList.contains("is-open")));
   links.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
@@ -143,6 +147,7 @@
     document.getElementById("modalList").innerHTML = c.learn.map((l) => `<li>${esc(l)}</li>`).join("");
     document.getElementById("modalFor").textContent = c.forWho;
     document.getElementById("modalEnquire").dataset.course = c.title;
+    tr(modal);
     if (typeof modal.showModal === "function") modal.showModal();
     else modal.setAttribute("open", "");
     document.body.classList.add("modal-open");
@@ -187,11 +192,13 @@
     if (!name || digits.length < 10) {
       statusEl.className = "form__status is-error";
       statusEl.textContent = "Please enter your name and a valid 10-digit phone number.";
+      tr(statusEl);
       return;
     }
 
     submitBtn.disabled = true;
     submitBtn.textContent = "Sending…";
+    tr(submitBtn);
     statusEl.className = "form__status";
     statusEl.textContent = "";
     const wa = whatsappLink(data);
@@ -204,17 +211,20 @@
       });
       if (!res.ok) throw new Error(String(res.status));
       statusEl.className = "form__status is-success";
-      statusEl.innerHTML = `Thank you, ${esc(name)}! We’ve received your enquiry and will call you soon. ` +
+      statusEl.innerHTML = `<span>Thank you</span>, ${esc(name)}! <span>We’ve received your enquiry and will call you soon.</span> ` +
         `<a href="${wa}" target="_blank" rel="noopener">Want a faster reply? Message us on WhatsApp →</a>`;
+      tr(statusEl);
       form.reset();
     } catch {
       // Not hosted on Netlify (or offline): hand the enquiry over to WhatsApp instead.
       statusEl.className = "form__status is-success";
-      statusEl.innerHTML = `Opening WhatsApp to send your enquiry… <a href="${wa}" target="_blank" rel="noopener">Tap here if it didn’t open.</a>`;
+      statusEl.innerHTML = `<span>Opening WhatsApp to send your enquiry…</span> <a href="${wa}" target="_blank" rel="noopener">Tap here if it didn’t open.</a>`;
+      tr(statusEl);
       window.open(wa, "_blank", "noopener");
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Submit Enquiry";
+      tr(submitBtn);
     }
   });
 
@@ -304,6 +314,7 @@
     window.addEventListener("resize", layout);
     window.addEventListener("load", layout);
     document.addEventListener("gx:introdone", layout);
+    document.addEventListener("gx:langchange", layout);
     if ("IntersectionObserver" in window) {
       // Play every time the section comes into view; reset once it has fully left the screen.
       const tio = new IntersectionObserver((entries) => {

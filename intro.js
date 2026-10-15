@@ -27,7 +27,11 @@
 
   const $ = (sel) => intro.querySelector(sel);
   const status = $("#introStatus");
-  const setStatus = (t) => { if (status) status.textContent = t; };
+  const setStatus = (t) => {
+    if (!status) return;
+    status.textContent = t;
+    if (window.GX_I18N) window.GX_I18N.apply(status);
+  };
 
   function finish() {
     if (finished) return;

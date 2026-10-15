@@ -14,6 +14,8 @@ Live: https://goldxpert-academy.netlify.app
 | `courses.js` | **Course list, fees and durations** — edit this to update courses |
 | `intro.js` | Opening animation (gold bar melts and fills the GX logo mold) |
 | `script.js` | Menu, course filters, course details popup, enquiry form |
+| `i18n.js` | **Telugu translations** — English sentence → Telugu sentence |
+| `prefs.js` | Light / Dark / System-default theme and English / Telugu switches |
 | `assets/` | Logo, favicon and the self-hosted GSAP animation library |
 
 ## Updating fees and durations
@@ -27,6 +29,13 @@ fee: "₹15,000"
 
 Leave them as `null` to show "Call for fee" / "Call for details".
 The course cards, the Fees & Batches table and the enquiry dropdown all update automatically.
+
+## Themes and language
+
+- Visitors can choose **Light**, **Dark** or **System default** (follows their phone / computer setting) from the
+  header. The choice is remembered on that device.
+- The **English / తెలుగు** button switches the whole site. To change a Telugu sentence, edit it in `i18n.js`.
+  If you add new English text to the site, add its Telugu version there too.
 
 ## Enquiry form
 
