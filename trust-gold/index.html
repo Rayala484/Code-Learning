@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trust Gold Services — Sell Gold &amp; Release Pledged Gold</title>
+<meta name="description" content="Sell your old gold or release gold pledged with a bank or finance company. Open weighing, free purity testing and a clear valuation, explained in English and Telugu.">
+<meta name="theme-color" content="#0b0a08">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal,.line>span{opacity:1!important;transform:none!important}.loader{display:none}body.is-loading{overflow:auto}</style></noscript>
+</head>
+<body class="is-loading">
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__panel loader__panel--top"></div>
+  <div class="loader__panel loader__panel--bottom"></div>
+  <div class="loader__core">
+    <svg class="gauge" viewBox="0 0 200 200">
+      <defs>
+        <linearGradient id="gaugeGold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#f7e29c"/><stop offset=".5" stop-color="#d4a73c"/><stop offset="1" stop-color="#8a6a1f"/>
+        </linearGradient>
+      </defs>
+      <circle class="gauge__track" cx="100" cy="100" r="86"/>
+      <circle class="gauge__fill" id="gaugeFill" cx="100" cy="100" r="86"/>
+      <g class="gauge__ticks"></g>
+    </svg>
+    <div class="loader__read">
+      <span class="loader__num" id="loaderNum">0.0</span>
+      <span class="loader__unit">% pure</span>
+    </div>
+    <p class="loader__msg" id="loaderMsg">Weighing…</p>
+    <p class="loader__brand">Trust Gold Services</p>
+  </div>
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><b id="cursorLabel"></b></span></div>
+<canvas class="dust" id="dust" aria-hidden="true"></canvas>
+
+<!-- ============ HEADER ============ -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand" data-cursor aria-label="Trust Gold Services home">
+    <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
+      <defs><linearGradient id="bm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7e29c"/><stop offset=".55" stop-color="#d4a73c"/><stop offset="1" stop-color="#8a6a1f"/></linearGradient></defs>
+      <path d="M24 2 44 13v22L24 46 4 35V13z" fill="url(#bm)"/>
+      <path d="M24 6 40 15v18L24 42 8 33V15z" fill="#0b0a08"/>
+      <path d="M15 17h18v4.2h-6.9V35h-4.2V21.2H15z" fill="url(#bm)"/>
+    </svg>
+    <span class="brand__text"><b>Trust Gold</b><small>Services</small></span>
+  </a>
+  <nav class="nav__links" aria-label="Main">
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#process" data-i18n="nav_process">How it works</a>
+    <a href="#valuation" data-i18n="nav_value">Valuation</a>
+    <a href="#faq" data-i18n="nav_faq">FAQ</a>
+    <a href="#contact" data-i18n="nav_contact">Contact</a>
+  </nav>
+  <div class="nav__actions">
+    <button class="lang" id="langBtn" type="button" aria-label="Switch language" data-cursor><span class="lang__en">EN</span><span class="lang__sep"></span><span class="lang__te">తె</span></button>
+    <a href="#contact" class="btn btn--gold btn--sm magnetic" data-cursor data-i18n="nav_cta">Free valuation</a>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <a href="#services" data-i18n="nav_services">Services</a>
+  <a href="#process" data-i18n="nav_process">How it works</a>
+  <a href="#valuation" data-i18n="nav_value">Valuation</a>
+  <a href="#faq" data-i18n="nav_faq">FAQ</a>
+  <a href="#contact" data-i18n="nav_contact">Contact</a>
+  <a href="#" class="btn btn--gold" data-tel data-i18n="call_us">Call us</a>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__glow" data-speed="-0.12"></div>
+  <div class="hero__grid wrap">
+    <div class="hero__copy">
+      <p class="eyebrow reveal" data-i18n="hero_eyebrow">Transparent gold buyers</p>
+      <h1 class="hero__title" aria-label="Your gold. Valued openly. Paid fairly.">
+        <span class="line"><span data-i18n="hero_l1">Your gold.</span></span>
+        <span class="line"><span class="gold-text" data-i18n="hero_l2">Valued openly.</span></span>
+        <span class="line"><span data-i18n="hero_l3">Paid fairly.</span></span>
+      </h1>
+      <p class="hero__sub reveal" data-i18n="hero_sub">Sell your old gold, or get your pledged gold released from a bank or finance company. Free purity testing and every step explained — in English and Telugu.</p>
+
+      <div class="choices reveal">
+        <a href="#contact" class="choice tilt" data-service="sell" data-cursor="Start">
+          <span class="choice__icon"><svg viewBox="0 0 32 32"><path d="M4 22 9 10h14l5 12z"/><path d="M9 10 12 5h8l3 5"/></svg></span>
+          <span class="choice__body"><b data-i18n="ch1_t">I want to sell my gold</b><small data-i18n="ch1_s">Get a free valuation</small></span>
+          <span class="choice__arrow">→</span>
+        </a>
+        <a href="#contact" class="choice tilt" data-service="release" data-cursor="Start">
+          <span class="choice__icon"><svg viewBox="0 0 32 32"><rect x="7" y="14" width="18" height="13" rx="2"/><path d="M11 14V10a5 5 0 0 1 9.6-2"/></svg></span>
+          <span class="choice__body"><b data-i18n="ch2_t">My gold is pledged</b><small data-i18n="ch2_s">Get it released</small></span>
+          <span class="choice__arrow">→</span>
+        </a>
+      </div>
+
+      <ul class="hero__chips reveal" aria-label="Purity grades we test">
+        <li>999</li><li>916</li><li>875</li><li>750</li><li>585</li>
+        <li class="hero__chips-label" data-i18n="hero_chips">purity grades tested</li>
+      </ul>
+    </div>
+
+    <div class="hero__stage" id="stage" aria-hidden="true" data-speed="0.07">
+      <div class="scene">
+        <div class="ring ring--1"></div><div class="ring ring--2"></div>
+        <div class="bar" id="bar">
+          <div class="bar__face bar__front"><span class="bar__brand">TRUST GOLD</span><span class="bar__purity">FINE GOLD 999.9</span><span class="bar__wt">100 g</span></div>
+          <div class="bar__face bar__back"><span class="bar__brand">TRUST GOLD</span><span class="bar__purity">ASSAYED · WEIGHED</span></div>
+          <div class="bar__face bar__left"></div>
+          <div class="bar__face bar__right"></div>
+          <div class="bar__face bar__top"></div>
+          <div class="bar__face bar__bottom"></div>
+          <div class="bar__shadow"></div>
+        </div>
+        <div class="coin coin--a" data-coin></div>
+        <div class="coin coin--b" data-coin></div>
+        <div class="coin coin--c" data-coin></div>
+      </div>
+      <div class="rate glass" id="rateCard">
+        <span class="rate__dot"></span>
+        <div>
+          <small data-i18n="rate_label">Today's gold rate</small>
+          <b id="rateVal" data-i18n="rate_ask">Ask for today's rate</b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#services" class="scrollcue" aria-label="Scroll down" data-cursor><span></span></a>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Free purity test</span><i>◆</i><span>Open weighing</span><i>◆</i><span>Pledged gold release</span><i>◆</i><span>Fair market valuation</span><i>◆</i><span>Telugu &amp; English support</span><i>◆</i><span>Instant payment</span><i>◆</i>
+    <span>Free purity test</span><i>◆</i><span>Open weighing</span><i>◆</i><span>Pledged gold release</span><i>◆</i><span>Fair market valuation</span><i>◆</i><span>Telugu &amp; English support</span><i>◆</i><span>Instant payment</span><i>◆</i>
+  </div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section class="section section--light" id="services">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow eyebrow--dark reveal" data-i18n="sv_eyebrow">What we do</p>
+      <h2 class="reveal" data-i18n="sv_title">Two problems.<br>One honest place to solve them.</h2>
+    </header>
+
+    <div class="services">
+      <article class="svc tilt reveal" data-reveal="left">
+        <span class="svc__no">01</span>
+        <div class="svc__icon"><svg viewBox="0 0 64 64"><path d="M10 44 18 22h28l8 22z"/><path d="M18 22 24 12h16l6 10"/><path d="M32 12v10M24 33h16"/></svg></div>
+        <h3 data-i18n="sv1_t">Sell your gold</h3>
+        <p data-i18n="sv1_p">Old jewellery, coins, broken pieces — we weigh and test them in front of you, show the calculation and pay you for what it is worth.</p>
+        <ul class="ticks">
+          <li data-i18n="sv1_a">Free purity test</li>
+          <li data-i18n="sv1_b">Weighed in front of you</li>
+          <li data-i18n="sv1_c">Clear, step-by-step calculation</li>
+        </ul>
+        <a href="#contact" class="link-arrow" data-service="sell" data-cursor><span data-i18n="sv1_cta">Get a free valuation</span> <i>→</i></a>
+      </article>
+
+      <article class="svc svc--dark tilt reveal" data-reveal="right">
+        <span class="svc__no">02</span>
+        <div class="svc__icon"><svg viewBox="0 0 64 64"><rect x="14" y="28" width="36" height="26" rx="4"/><path d="M22 28V20a10 10 0 0 1 19.5-3.2"/><circle cx="32" cy="41" r="3.5"/></svg></div>
+        <h3 data-i18n="sv2_t">Release pledged gold</h3>
+        <p data-i18n="sv2_p">Gold kept with a bank or finance company? We help you clear it, bring your gold back and settle the balance with you — with the numbers explained first.</p>
+        <ul class="ticks">
+          <li data-i18n="sv2_a">Outstanding amount verified with you</li>
+          <li data-i18n="sv2_b">Gold tested and weighed on release</li>
+          <li data-i18n="sv2_c">Balance settled transparently</li>
+        </ul>
+        <a href="#contact" class="link-arrow" data-service="release" data-cursor><span data-i18n="sv2_cta">Ask about release</span> <i>→</i></a>
+      </article>
+    </div>
+
+    <div class="mini reveal">
+      <div class="mini__item"><b data-i18n="mi1_t">No jargon</b><span data-i18n="mi1_p">Ask any question — we explain karats, purity and weight in plain words.</span></div>
+      <div class="mini__item"><b data-i18n="mi2_t">తెలుగు &amp; English</b><span data-i18n="mi2_p">Talk to us in the language you are most comfortable with.</span></div>
+      <div class="mini__item" data-feature="doorstep"><b data-i18n="mi3_t">Doorstep option</b><span data-i18n="mi3_p">Prefer not to travel? Ask us about a valuation visit at your home.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="section section--dark" id="process">
+  <div class="process__bg" data-speed="0.18"></div>
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow reveal" data-i18n="pr_eyebrow">How it works</p>
+      <h2 class="reveal" data-i18n="pr_title">Every step, out in the open.</h2>
+    </header>
+
+    <div class="tabs reveal" role="tablist">
+      <button class="tab is-active" role="tab" aria-selected="true" data-tab="sell" data-cursor data-i18n="pr_tab1">Selling gold</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="release" data-cursor data-i18n="pr_tab2">Releasing pledged gold</button>
+      <span class="tabs__pill"></span>
+    </div>
+
+    <div class="steps is-active" data-panel="sell">
+      <div class="steps__line"><span></span></div>
+      <div class="step tilt reveal"><i>1</i><h4 data-i18n="s1_t">Bring your gold</h4><p data-i18n="s1_p">Visit us or contact us. Carry a valid photo ID.</p></div>
+      <div class="step tilt reveal"><i>2</i><h4 data-i18n="s2_t">Weigh &amp; test</h4><p data-i18n="s2_p">Weight and purity are checked while you watch.</p></div>
+      <div class="step tilt reveal"><i>3</i><h4 data-i18n="s3_t">See the calculation</h4><p data-i18n="s3_p">Weight × purity × today's rate — shown clearly, no surprises.</p></div>
+      <div class="step tilt reveal"><i>4</i><h4 data-i18n="s4_t">Get paid</h4><p data-i18n="s4_p">Accept the offer and receive payment without delay.</p></div>
+    </div>
+
+    <div class="steps" data-panel="release">
+      <div class="steps__line"><span></span></div>
+      <div class="step tilt"><i>1</i><h4 data-i18n="r1_t">Share pledge details</h4><p data-i18n="r1_p">Send your pledge receipt or loan details by call or WhatsApp.</p></div>
+      <div class="step tilt"><i>2</i><h4 data-i18n="r2_t">Verify the amount</h4><p data-i18n="r2_p">We confirm the outstanding amount with the lender.</p></div>
+      <div class="step tilt"><i>3</i><h4 data-i18n="r3_t">Loan cleared</h4><p data-i18n="r3_p">The loan is settled and your gold is brought back.</p></div>
+      <div class="step tilt"><i>4</i><h4 data-i18n="r4_t">Weigh &amp; test</h4><p data-i18n="r4_p">Your gold is weighed and tested in front of you.</p></div>
+      <div class="step tilt"><i>5</i><h4 data-i18n="r5_t">Settle the balance</h4><p data-i18n="r5_p">The remaining value is settled with you, fully explained.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUATION ============ -->
+<section class="section section--light" id="valuation">
+  <div class="wrap valuation">
+    <div class="valuation__copy">
+      <p class="eyebrow eyebrow--dark reveal" data-i18n="va_eyebrow">Know before you come</p>
+      <h2 class="reveal" data-i18n="va_title">See how your gold is valued.</h2>
+      <p class="reveal" data-i18n="va_p">Pure gold content is simply weight × purity. Try it yourself — the final offer is confirmed after testing.</p>
+
+      <div class="purity reveal" id="purity">
+        <div class="purity__row" data-k="24"><span>24K</span><div><i style="--w:99.9%"></i></div><em>99.9%</em></div>
+        <div class="purity__row" data-k="22"><span>22K</span><div><i style="--w:91.6%"></i></div><em>91.6%</em></div>
+        <div class="purity__row" data-k="20"><span>20K</span><div><i style="--w:83.3%"></i></div><em>83.3%</em></div>
+        <div class="purity__row" data-k="18"><span>18K</span><div><i style="--w:75%"></i></div><em>75.0%</em></div>
+        <div class="purity__row" data-k="14"><span>14K</span><div><i style="--w:58.5%"></i></div><em>58.5%</em></div>
+      </div>
+    </div>
+
+    <div class="calc glass-dark tilt reveal" data-reveal="scale">
+      <h3 data-i18n="calc_t">Gold value estimator</h3>
+      <div class="field">
+        <input id="cWeight" type="number" inputmode="decimal" min="0" step="0.01" placeholder=" " value="10">
+        <label for="cWeight" data-i18n="calc_w">Weight (grams)</label>
+      </div>
+      <div class="karats" id="cKarat" role="radiogroup" aria-label="Karat">
+        <button type="button" class="karat" data-k="24" data-cursor>24K</button>
+        <button type="button" class="karat is-active" data-k="22" data-cursor>22K</button>
+        <button type="button" class="karat" data-k="20" data-cursor>20K</button>
+        <button type="button" class="karat" data-k="18" data-cursor>18K</button>
+        <button type="button" class="karat" data-k="14" data-cursor>14K</button>
+      </div>
+      <div class="calc__out">
+        <div>
+          <small data-i18n="calc_pure">Pure gold content</small>
+          <b><span id="outPure">0.00</span> g</b>
+        </div>
+        <div id="outValueWrap" hidden>
+          <small data-i18n="calc_est">Indicative value</small>
+          <b>₹ <span id="outValue">0</span></b>
+        </div>
+      </div>
+      <p class="calc__note" id="calcNote" data-i18n="calc_note">Ask us for today's rate — it changes daily. Final value is confirmed after testing and weighing.</p>
+      <a href="#contact" class="btn btn--gold btn--block magnetic" data-service="sell" data-cursor data-i18n="calc_cta">Get today's exact offer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ITEMS ============ -->
+<section class="section section--dark section--tight" id="items">
+  <div class="wrap">
+    <header class="sec-head sec-head--row">
+      <div>
+        <p class="eyebrow reveal" data-i18n="it_eyebrow">What we buy</p>
+        <h2 class="reveal" data-i18n="it_title">Bring it as it is.</h2>
+      </div>
+      <p class="reveal" data-i18n="it_p">No need to repair, clean or polish. Old, broken or unused — we value it all.</p>
+    </header>
+    <div class="items">
+      <div class="item tilt reveal"><svg viewBox="0 0 48 48"><circle cx="24" cy="30" r="11"/><path d="M24 19v-6m-4-5h8"/></svg><b data-i18n="i1_t">Jewellery</b><span data-i18n="i1_p">Chains, bangles, necklaces, rings, earrings</span></div>
+      <div class="item tilt reveal"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="10"/></svg><b data-i18n="i2_t">Coins &amp; bars</b><span data-i18n="i2_p">Gold coins, biscuits and bars</span></div>
+      <div class="item tilt reveal"><svg viewBox="0 0 48 48"><path d="M8 28 22 14l6 8-5 4 10 8"/></svg><b data-i18n="i3_t">Old &amp; broken</b><span data-i18n="i3_p">Damaged, mismatched or unused pieces</span></div>
+      <div class="item tilt reveal"><svg viewBox="0 0 48 48"><rect x="10" y="22" width="28" height="18" rx="3"/><path d="M16 22v-5a8 8 0 0 1 16 0v5"/></svg><b data-i18n="i4_t">Pledged gold</b><span data-i18n="i4_p">Held with a bank or finance company</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="section section--light" id="why">
+  <div class="wrap why">
+    <div class="why__sticky">
+      <p class="eyebrow eyebrow--dark reveal" data-i18n="wy_eyebrow">Why Trust Gold</p>
+      <h2 class="reveal" data-i18n="wy_title">Trust isn't a slogan. It's how we work.</h2>
+      <a href="#contact" class="btn btn--dark magnetic reveal" data-cursor data-i18n="wy_cta">Talk to us</a>
+    </div>
+    <ol class="why__list">
+      <li class="reveal"><span>01</span><div><h4 data-i18n="w1_t">Open weighing</h4><p data-i18n="w1_p">You see the scale, the reading and the calculation — nothing happens behind a counter.</p></div></li>
+      <li class="reveal"><span>02</span><div><h4 data-i18n="w2_t">Free purity testing</h4><p data-i18n="w2_p">Know exactly what you are holding before you decide anything. No charge, no obligation.</p></div></li>
+      <li class="reveal"><span>03</span><div><h4 data-i18n="w3_t">Clear, fair numbers</h4><p data-i18n="w3_p">Valuation follows the day's market rate. If you don't like the offer, you walk away freely.</p></div></li>
+      <li class="reveal"><span>04</span><div><h4 data-i18n="w4_t">Your language</h4><p data-i18n="w4_p">We explain everything in Telugu or English, patiently, as many times as you need.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ REVIEWS (shown only when real reviews exist in config.js) ============ -->
+<section class="section section--dark" id="reviews" hidden>
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="eyebrow reveal" data-i18n="rv_eyebrow">Customer words</p>
+      <h2 class="reveal" data-i18n="rv_title">What our customers say</h2>
+    </header>
+    <div class="reviews" id="reviewList"></div>
+    <a href="#" class="link-arrow reveal" id="reviewLink" data-cursor hidden><span data-i18n="rv_more">Read more on Google</span> <i>→</i></a>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section--light" id="faq">
+  <div class="wrap faq-wrap">
+    <header class="sec-head">
+      <p class="eyebrow eyebrow--dark reveal" data-i18n="fq_eyebrow">Questions</p>
+      <h2 class="reveal" data-i18n="fq_title">Things people ask first.</h2>
+    </header>
+    <div class="faq">
+      <details class="reveal"><summary data-cursor><span data-i18n="q1">What should I bring to sell gold?</span><i></i></summary><div><p data-i18n="a1">Your gold items and a valid photo ID such as Aadhaar. If any item has a purchase bill, bring that too — it is helpful but not always required.</p></div></details>
+      <details class="reveal"><summary data-cursor><span data-i18n="q2">How is my gold tested?</span><i></i></summary><div><p data-i18n="a2">We check purity and weight in front of you and show you the reading. Testing is free and you are under no obligation to sell.</p></div></details>
+      <details class="reveal"><summary data-cursor><span data-i18n="q3">How is the price decided?</span><i></i></summary><div><p data-i18n="a3">Price = weight × purity × the day's gold rate. We show you each part of the calculation so you can see exactly how the offer is made.</p></div></details>
+      <details class="reveal"><summary data-cursor><span data-i18n="q4">How does pledged gold release work?</span><i></i></summary><div><p data-i18n="a4">You share your pledge details, we verify the outstanding amount, the loan is cleared and your gold is brought back. It is then weighed and tested, and the balance is settled with you.</p></div></details>
+      <details class="reveal"><summary data-cursor><span data-i18n="q5">How do I get paid?</span><i></i></summary><div><p data-i18n="a5">Once you accept the offer, payment is made without delay by bank transfer or other modes permitted by law. Ask us for the options available.</p></div></details>
+      <details class="reveal"><summary data-cursor><span data-i18n="q6">Can I speak in Telugu?</span><i></i></summary><div><p data-i18n="a6">Yes. You can talk to us, and read this website, in Telugu or English.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section section--dark contact" id="contact">
+  <div class="contact__glow" data-speed="0.15"></div>
+  <div class="wrap contact__grid">
+    <div class="contact__copy">
+      <p class="eyebrow reveal" data-i18n="ct_eyebrow">Start here</p>
+      <h2 class="reveal" data-i18n="ct_title">Free valuation.<br>No obligation.</h2>
+      <p class="reveal" data-i18n="ct_p">Tell us what you need. We'll call you back, or message you on WhatsApp.</p>
+
+      <ul class="cinfo reveal">
+        <li data-has="phone"><small data-i18n="ct_call">Call</small><a href="#" data-tel data-cursor><span data-bind="phone"></span></a></li>
+        <li data-has="whatsapp"><small>WhatsApp</small><a href="#" data-wa target="_blank" rel="noopener" data-cursor data-i18n="ct_chat">Chat with us</a></li>
+        <li data-has="email"><small>Email</small><a href="#" data-mail data-cursor><span data-bind="email"></span></a></li>
+        <li data-has="address"><small data-i18n="ct_visit">Visit</small><span data-bind="address"></span></li>
+        <li data-has="hours"><small data-i18n="ct_hours">Hours</small><span data-bind="hours"></span></li>
+        <li class="cinfo__empty" data-empty><span data-i18n="ct_empty">Contact details coming soon — please use the form.</span></li>
+      </ul>
+      <a href="#" class="link-arrow reveal" id="mapLink" data-cursor hidden><span data-i18n="ct_map">Open in Google Maps</span> <i>→</i></a>
+    </div>
+
+    <form class="form glass tilt reveal" id="enquiry" name="enquiry" method="post" data-netlify="true" netlify-honeypot="bot-field" data-reveal="scale" novalidate>
+      <input type="hidden" name="form-name" value="enquiry">
+      <p hidden><label>Leave empty <input name="bot-field"></label></p>
+      <h3 data-i18n="f_title">Request your free valuation</h3>
+      <div class="seg" id="seg" role="radiogroup" aria-label="Service">
+        <button type="button" class="seg__btn is-active" data-service="sell" data-cursor data-i18n="f_sell">Sell gold</button>
+        <button type="button" class="seg__btn" data-service="release" data-cursor data-i18n="f_release">Release pledged gold</button>
+        <span class="seg__pill"></span>
+      </div>
+      <div class="field"><input id="fName" name="name" type="text" placeholder=" " autocomplete="name" required><label for="fName" data-i18n="f_name">Your name</label></div>
+      <div class="field"><input id="fPhone" name="phone" type="tel" inputmode="tel" placeholder=" " autocomplete="tel" required><label for="fPhone" data-i18n="f_phone">Phone number</label></div>
+      <div class="field"><input id="fNote" name="note" type="text" placeholder=" "><label for="fNote" data-i18n="f_note">Approx. weight or details (optional)</label></div>
+      <p class="form__err" id="formErr" role="alert" hidden data-i18n="f_err">Please enter your name and a valid phone number.</p>
+      <button class="btn btn--gold btn--block magnetic" type="submit" data-cursor><span data-i18n="f_send">Send on WhatsApp</span></button>
+      <p class="form__fine" data-i18n="f_fine">We only use your details to respond to this enquiry.</p>
+      <div class="form__ok" id="formOk" hidden>
+        <svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+        <b data-i18n="f_ok">Thank you!</b><span data-i18n="f_ok2">We'll be in touch shortly.</span>
+      </div>
+    </form>
+  </div>
+  <div class="wrap mapwrap" id="mapWrap" hidden><iframe id="mapFrame" title="Trust Gold Services location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <div>
+      <b class="footer__brand">Trust Gold Services</b>
+      <p data-bind="city"></p>
+    </div>
+    <nav class="footer__nav" aria-label="Footer">
+      <a href="#services" data-i18n="nav_services">Services</a>
+      <a href="#process" data-i18n="nav_process">How it works</a>
+      <a href="#faq" data-i18n="nav_faq">FAQ</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <div class="footer__social" id="social"></div>
+  </div>
+  <div class="wrap footer__fine">
+    <span>© <span id="year"></span> Trust Gold Services. <span data-i18n="ft_rights">All rights reserved.</span></span>
+    <span data-i18n="ft_note">Valuations are indicative until your gold is weighed and tested.</span>
+  </div>
+</footer>
+
+<!-- Mobile action bar -->
+<div class="dock" id="dock">
+  <a href="#" data-tel class="dock__btn"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span data-i18n="call_us">Call us</span></a>
+  <a href="#" data-wa target="_blank" rel="noopener" class="dock__btn dock__btn--wa"><svg viewBox="0 0 24 24"><path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8z"/></svg><span>WhatsApp</span></a>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
