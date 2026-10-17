@@ -619,3 +619,9 @@ html[lang="te"] .footer h4 { letter-spacing: .03em; font-size: .95rem; }
   .pulse { animation: none; }
   .btn, .path, .type, .mv__card { transition: none; }
 }
+
+/* Keep footer text and the WhatsApp button clear of Netlify's corner badge */
+@media (min-width: 901px) {
+  .footer__bottom { padding-right: 96px; padding-bottom: 84px; }
+  .fab { bottom: 84px; }
+}

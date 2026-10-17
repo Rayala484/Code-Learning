@@ -37,7 +37,7 @@
   }
 
   // ---------- Gold rates ----------
-  const rates = cfg.rates || {};
+  const rates = Object.assign({}, cfg.rates);
   const fee = typeof cfg.processingFee === "number" ? cfg.processingFee : 0.01;
   function renderRates() {
     const locale = lang === "te" ? "te-IN" : "en-IN";
@@ -217,6 +217,24 @@
     if (rel && F.loan.value) lines.push(`${dyn("waLoan")}: ${inr(parseFloat(F.loan.value))}`);
     window.open(`https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
   });
+
+  // ---------- Live gold rate (refreshes every 30 minutes) ----------
+  async function loadLiveRates() {
+    try {
+      const res = await fetch("/api/gold-rate", { headers: { accept: "application/json" } });
+      if (!res.ok) return;
+      const d = await res.json();
+      if (!(d.k24 > 0 && d.k22 > 0)) return;
+      Object.assign(rates, { k24: d.k24, k22: d.k22, updated: d.updated });
+      renderRates();
+      renderExample();
+      compute();
+    } catch (e) { /* keep the rates from config.js */ }
+  }
+  if (cfg.liveRates !== false) {
+    loadLiveRates();
+    setInterval(loadLiveRates, 30 * 60 * 1000);
+  }
 
   // ---------- Init ----------
   const yr = $("#year");
