@@ -1,6 +1,6 @@
 /*
   Live gold rate for the Trust Gold Services website.
-  Served at /api/gold-rate and cached on Netlify's CDN for 30 minutes,
+  Served at /api/gold-rate and cached on Netlify's CDN for 10 minutes,
   so the rates on the site refresh automatically through the day.
 
   Indian market rates track the international spot price converted to rupees,
@@ -68,12 +68,13 @@ export default async () => {
         k18: Math.round(k24 * PURITY_18K),
         spotPerGram: Math.round(spotPerGram),
         source: spot.source,
+        marketTime: spot.time ?? null,
         updated: new Date().toISOString(),
       },
       {
         headers: {
           "cache-control": "public, max-age=300",
-          "netlify-cdn-cache-control": "public, durable, s-maxage=1800, stale-while-revalidate=86400",
+          "netlify-cdn-cache-control": "public, durable, s-maxage=600, stale-while-revalidate=300",
         },
       },
     )

@@ -5,7 +5,7 @@
 */
 window.TGS_CONFIG = {
   // ---- Gold rate (₹ per gram) ----
-  // liveRates: true  → the site shows the live market rate, refreshed automatically every 30 minutes.
+  // liveRates: true  → the site shows the live market rate, refreshed automatically every 10 minutes.
   // liveRates: false → the site shows the numbers below exactly as typed (use this to set your own rate).
   // The numbers below are also shown if the live rate is ever unavailable.
   liveRates: true,

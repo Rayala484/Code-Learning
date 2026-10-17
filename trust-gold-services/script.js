@@ -39,18 +39,21 @@
   // ---------- Gold rates ----------
   const rates = Object.assign({}, cfg.rates);
   const fee = typeof cfg.processingFee === "number" ? cfg.processingFee : 0.01;
+  // Dates are always shown in India time. With the live rate, the strip shows today's date.
   function renderRates() {
     const locale = lang === "te" ? "te-IN" : "en-IN";
+    const tz = { timeZone: "Asia/Kolkata" };
     const d = rates.updated ? new Date(rates.updated) : null;
     const valid = d && !isNaN(d);
+    const day = rates.live ? new Date() : d;
     $$("[data-rate]").forEach((el) => {
       const k = el.dataset.rate;
       if (k === "k24" || k === "k22") { if (rates[k]) el.textContent = inr(rates[k]); }
       else if (valid && k === "updated") {
-        el.textContent = d.toLocaleDateString(locale, { day: "numeric", month: "short", year: "numeric" });
-        el.dateTime = rates.updated;
+        el.textContent = day.toLocaleDateString(locale, { ...tz, day: "numeric", month: "short", year: "numeric" });
+        el.dateTime = day.toISOString();
       } else if (valid && k === "updatedLong") {
-        el.textContent = d.toLocaleString(locale, { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" });
+        el.textContent = d.toLocaleString(locale, { ...tz, day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "2-digit" });
         el.dateTime = rates.updated;
       }
     });
@@ -218,14 +221,14 @@
     window.open(`https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
   });
 
-  // ---------- Live gold rate (refreshes every 30 minutes) ----------
+  // ---------- Live gold rate (refreshes every 10 minutes) ----------
   async function loadLiveRates() {
     try {
       const res = await fetch("/api/gold-rate", { headers: { accept: "application/json" } });
       if (!res.ok) return;
       const d = await res.json();
       if (!(d.k24 > 0 && d.k22 > 0)) return;
-      Object.assign(rates, { k24: d.k24, k22: d.k22, updated: d.updated });
+      Object.assign(rates, { k24: d.k24, k22: d.k22, updated: d.updated, live: true });
       renderRates();
       renderExample();
       compute();
@@ -233,7 +236,8 @@
   }
   if (cfg.liveRates !== false) {
     loadLiveRates();
-    setInterval(loadLiveRates, 30 * 60 * 1000);
+    setInterval(loadLiveRates, 10 * 60 * 1000);
+    setInterval(renderRates, 60 * 1000); // date rolls over at midnight on an open page
   }
 
   // ---------- Init ----------

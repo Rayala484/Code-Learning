@@ -20,8 +20,8 @@ Deployed on Netlify (project `trust-gold-services`). No build step; the live gol
 
 `netlify/functions/gold-rate.mts` serves `/api/gold-rate`. It reads the live international gold
 price, converts it to rupees per gram and adds the Indian market premium (`INDIA_PREMIUM`,
-calibrated to Vijayawada / AP rates). Netlify caches it for 30 minutes, and open pages refresh
-it every 30 minutes, so the rate strip, rate cards, calculator and example stay current all day.
+calibrated to Vijayawada / AP rates). Netlify caches it for 10 minutes, and open pages refresh
+it every 10 minutes, so the rate strip, rate cards, calculator and example stay current all day.
 
 In `config.js`:
 
