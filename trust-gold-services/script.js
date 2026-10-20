@@ -272,13 +272,24 @@
     };
     const play = () => { clearInterval(timer); timer = setInterval(() => show(idx + 1), SLIDE_MS); };
     dots.forEach((d, i) => d.addEventListener("click", () => { show(i); play(); }));
+    $(".slider__nav--prev", slider).addEventListener("click", () => { show(idx - 1); play(); });
+    $(".slider__nav--next", slider).addEventListener("click", () => { show(idx + 1); play(); });
+    slider.tabIndex = 0;
+    slider.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { show(idx - 1); play(); }
+      if (e.key === "ArrowRight") { show(idx + 1); play(); }
+    });
+    // Swipe with a finger or drag with the mouse / trackpad
     let x0 = null;
-    slider.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
-    slider.addEventListener("touchend", (e) => {
+    const track = $(".slider__track", slider);
+    track.addEventListener("pointerdown", (e) => { x0 = e.clientX; });
+    track.addEventListener("pointerup", (e) => {
       if (x0 === null) return;
-      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      const dx = e.clientX - x0; x0 = null;
       if (Math.abs(dx) > 40) { show(idx + (dx < 0 ? 1 : -1)); play(); }
     });
+    track.addEventListener("pointercancel", () => { x0 = null; });
+    track.addEventListener("dragstart", (e) => e.preventDefault());
     document.addEventListener("visibilitychange", () => { if (document.hidden) clearInterval(timer); else { show(idx); play(); } });
     show(0); play();
   }
