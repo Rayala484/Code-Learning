@@ -515,8 +515,8 @@ html[lang="te"] .path__kicker { letter-spacing: .03em; font-size: .92rem; }
 .quote p { font-family: var(--font-display); font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-style: italic; color: var(--ink); margin-bottom: 12px; line-height: 1.4; }
 html[lang="te"] .quote p { font-style: normal; }
 .quote footer { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; }
-.quote footer b { font-family: "Playfair Display", serif; font-size: 1.1rem; }
-.quote footer span { color: var(--muted); font-size: .9rem; }
+.quote footer b { font-family: "Playfair Display", serif; font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.quote footer span { color: var(--muted); font-size: 1rem; }
 @media (max-width: 960px) { .founder { grid-template-columns: 1fr; gap: 56px; } }
 @media (max-width: 520px) { .founder__frame::before { inset: 14px -10px -14px 14px; } .founder__badge { left: -6px; } }
 
