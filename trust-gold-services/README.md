@@ -41,6 +41,18 @@ If the site's rate drifts from local published rates, adjust `INDIA_PREMIUM` in 
 The form opens WhatsApp with the customer's details pre-filled and sends them to the business number
 in `config.js` — no server needed.
 
+## Hero slideshow
+
+The four banners in the hero are `assets/hero-1.webp` … `hero-4.webp` (1280×720). They cross-fade every
+5 seconds in an endless loop; visitors can also tap the dots or swipe. To change a banner, replace the file
+with a 16:9 image of the same name.
+
+## Customer reviews
+
+Add real customer reviews to `reviews` in `config.js`, for example
+`{ name: "Ravi K.", place: "Vijayawada", rating: 5, text: "..." }`. They appear as cards under
+"Hear it from our customers". With no reviews listed, only the Google Reviews / social buttons show.
+
 ## Social links
 
 Instagram, Facebook, YouTube and WhatsApp links are set in `config.js`. Clearing a link hides its icon

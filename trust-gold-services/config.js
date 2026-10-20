@@ -29,5 +29,11 @@ window.TGS_CONFIG = {
   maps: "https://maps.app.goo.gl/hkybjegfg9zumDPx6",
   instagram: "https://www.instagram.com/trustgoldservices",
   facebook: "https://www.facebook.com/share/1bgL24rnT9/",
-  youtube: "https://youtube.com/@trustgoldservices"
+  youtube: "https://youtube.com/@trustgoldservices",
+
+  // ---- Customer reviews ----
+  // Copy real reviews from Google / WhatsApp here (with the customer's permission).
+  // They appear as review cards under "Hear it from our customers". Example:
+  //   { name: "Ravi K.", place: "Vijayawada", rating: 5, text: "Very transparent process..." },
+  reviews: []
 };

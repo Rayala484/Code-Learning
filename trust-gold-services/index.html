@@ -33,7 +33,7 @@
     "@type": "LocalBusiness",
     "name": "Trust Gold Services",
     "description": "Gold buying and pledged gold release assistance in Vijayawada.",
-    "founder": "V. Manohar",
+    "founder": "V. Manohar Reddy",
     "telephone": "+91 93934 94455",
     "email": "trustgoldservices@gmail.com",
     "address": { "@type": "PostalAddress", "addressLocality": "Vijayawada", "addressRegion": "Andhra Pradesh", "addressCountry": "IN" },
@@ -163,12 +163,24 @@
         </div>
 
         <figure class="hero__media reveal" style="--d:.15s">
-          <div class="arch">
-            <div class="arch__glow" aria-hidden="true"></div>
-            <img src="assets/owner-namaste.webp" width="800" height="1200" alt="V. Manohar, founder of Trust Gold Services, greeting with a namaste" fetchpriority="high" />
+          <div class="slider" id="heroSlider" aria-roledescription="carousel" aria-label="Trust Gold Services highlights">
+            <div class="slider__glow" aria-hidden="true"></div>
+            <div class="slider__track">
+              <img class="slide is-active" src="assets/hero-1.webp" width="1280" height="720" alt="From bank tension to loan free with Trust Gold Services" fetchpriority="high" />
+              <img class="slide" src="assets/hero-2.webp" width="1280" height="720" alt="V. Manohar Reddy: we pay the bank dues and give the remaining cash to you" />
+              <img class="slide" src="assets/hero-3.webp" width="1280" height="720" alt="Instant bank foreclosure, live market valuation, 100% legal and documented" />
+              <img class="slide" src="assets/hero-4.webp" width="1280" height="720" alt="Your debts are solved, you are now loan-free" />
+              <span class="slider__bar" aria-hidden="true"></span>
+            </div>
+            <div class="slider__dots" role="group" aria-label="Choose slide">
+              <button type="button" class="is-active" aria-label="Slide 1"></button>
+              <button type="button" aria-label="Slide 2"></button>
+              <button type="button" aria-label="Slide 3"></button>
+              <button type="button" aria-label="Slide 4"></button>
+            </div>
           </div>
           <figcaption class="nameplate">
-            <b>V. Manohar</b>
+            <b>V. Manohar Reddy</b>
             <span data-i18n="founder.role">Founder &amp; Proprietor</span>
             <small>Trust Gold Services</small>
           </figcaption>
@@ -383,7 +395,7 @@
       <div class="container founder">
         <div class="founder__media reveal">
           <div class="founder__frame">
-            <img src="assets/owner-office.webp" width="1100" height="700" alt="V. Manohar, founder of Trust Gold Services, at his office" loading="lazy" />
+            <img src="assets/owner-office.webp" width="1100" height="700" alt="V. Manohar Reddy, founder of Trust Gold Services, at his office" loading="lazy" />
           </div>
           <div class="founder__badge"><svg class="ic"><use href="#i-wallet" /></svg><span data-i18n="f.badge">Quick &amp; secure payment</span></div>
         </div>
@@ -394,7 +406,7 @@
           <p data-i18n="f.p2">Founded in Vijayawada, we make the process transparent, respectful and customer-friendly — from the day's gold rate and purity check to testing, deductions and final valuation. And our relationship doesn't end after the transaction: we want to be the place you approach whenever you need reliable guidance about gold.</p>
           <blockquote class="quote">
             <p data-i18n="f.quote">“Gold carries value — but trust carries even more.”</p>
-            <footer><b>V. Manohar</b><span data-i18n="f.sign">Founder, Trust Gold Services</span></footer>
+            <footer><b>V. Manohar Reddy</b><span data-i18n="f.sign">Founder, Trust Gold Services</span></footer>
           </blockquote>
           <a class="btn btn--navy" data-link="phone" href="tel:+919393494455"><svg class="ic"><use href="#i-phone" /></svg><span data-i18n="f.cta">Talk to us directly</span></a>
         </div>
@@ -443,6 +455,9 @@
           <a class="soc soc--fb" data-link="facebook" href="https://www.facebook.com/share/1bgL24rnT9/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-facebook" /></svg><span>Facebook</span></a>
           <a class="soc soc--yt" data-link="youtube" href="#" target="_blank" rel="noopener" hidden><svg class="ic"><use href="#i-youtube" /></svg><span>YouTube</span></a>
         </div>
+      </div>
+      <div class="container">
+        <div class="reviews" id="reviewsList" hidden></div>
       </div>
     </section>
 

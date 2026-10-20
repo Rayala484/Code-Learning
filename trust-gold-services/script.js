@@ -240,6 +240,49 @@
     setInterval(renderRates, 60 * 1000); // date rolls over at midnight on an open page
   }
 
+  // ---------- Customer reviews (from config.js) ----------
+  const reviewsBox = $("#reviewsList");
+  const reviews = Array.isArray(cfg.reviews) ? cfg.reviews.filter((r) => r && r.text && r.name) : [];
+  if (reviewsBox && reviews.length) {
+    const esc = (t) => String(t).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+    reviewsBox.innerHTML = reviews.map((r) => {
+      const n = Math.max(0, Math.min(5, Math.round(r.rating || 5)));
+      const stars = Array.from({ length: 5 }, (_, i) => `<svg class="ic${i < n ? "" : " is-off"}"><use href="#i-star" /></svg>`).join("");
+      return `<article class="review"><div class="stars" role="img" aria-label="${n} out of 5 stars">${stars}</div>` +
+        `<p>${esc(r.text)}</p><footer><span class="review__avatar" aria-hidden="true">${esc(r.name.trim().charAt(0).toUpperCase())}</span>` +
+        `<div><b>${esc(r.name)}</b>${r.place ? `<small>${esc(r.place)}</small>` : ""}</div></footer></article>`;
+    }).join("");
+    reviewsBox.hidden = false;
+  }
+
+  // ---------- Hero slideshow (infinite loop) ----------
+  const slider = $("#heroSlider");
+  if (slider) {
+    const slides = $$(".slide", slider);
+    const dots = $$(".slider__dots button", slider);
+    const bar = $(".slider__bar", slider);
+    const SLIDE_MS = 5000;
+    let idx = 0, timer = null;
+    slider.style.setProperty("--slide-ms", SLIDE_MS + "ms");
+    const show = (n) => {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle("is-active", i === idx));
+      dots.forEach((d, i) => { d.classList.toggle("is-active", i === idx); d.setAttribute("aria-current", String(i === idx)); });
+      bar.classList.remove("is-running"); void bar.offsetWidth; bar.classList.add("is-running");
+    };
+    const play = () => { clearInterval(timer); timer = setInterval(() => show(idx + 1), SLIDE_MS); };
+    dots.forEach((d, i) => d.addEventListener("click", () => { show(i); play(); }));
+    let x0 = null;
+    slider.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener("touchend", (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) { show(idx + (dx < 0 ? 1 : -1)); play(); }
+    });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) clearInterval(timer); else { show(idx); play(); } });
+    show(0); play();
+  }
+
   // ---------- Init ----------
   const yr = $("#year");
   if (yr) yr.textContent = new Date().getFullYear();
