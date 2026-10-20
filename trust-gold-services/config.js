@@ -35,5 +35,16 @@ window.TGS_CONFIG = {
   // Copy real reviews from Google / WhatsApp here (with the customer's permission).
   // They appear as review cards under "Hear it from our customers". Example:
   //   { name: "Ravi K.", place: "Vijayawada", rating: 5, text: "Very transparent process..." },
-  reviews: []
+  reviews: [
+    { name: "Sai Kumar", place: "Vijayawada", rating: 5,
+      text: "I had my gold pledged at a private bank in Vijayawada and was struggling with high interest. V. Manohar garu and the team helped clear the loan directly with the bank, released my jewellery safely, and paid the balance amount on the spot. Very smooth and transparent process!" },
+    { name: "Ranga Rao", place: "Guntur / Vijayawada Region", rating: 5,
+      text: "Most gold buyers charge heavy hidden fees or insist on melting the gold right away. At Trust Gold Services, they tested the purity right in front of me and charged only a 1% processing fee as promised. Highly reliable and honest service." },
+    { name: "Pragathi Sharma", place: "Hyderabad, Telangana", rating: 5,
+      text: "I wanted to sell some old family gold ornaments for urgent family needs. The team explained the day's live gold rate, tested the purity open on screen without any secret deductions, and transferred the money directly to my bank account instantly. Completely safe for women!" },
+    { name: "Venkatesh V.", place: "Khammam / Telangana", rating: 5,
+      text: "Very professional approach compared to traditional gold pawn shops. They took care of all the legal paperwork and bank release procedures without any tension. If you want to release pledged gold without getting cheated, I strongly recommend Trust Gold Services." },
+    { name: "Anitha Reddy", place: "Vijayawada", rating: 5,
+      text: "Trustworthy and polite staff. They didn't force me to melt my jewellery, and every calculation was shown clearly before proceeding. Getting the remaining cash balance immediately after bank closure was a big relief for my family." }
+  ]
 };

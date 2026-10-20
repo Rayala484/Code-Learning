@@ -549,7 +549,8 @@ html[lang="te"] .quote p { font-style: normal; }
 .soc--fb .ic { color: #1877f2; }
 .soc--yt .ic { color: #ff0000; }
 .soc[hidden] { display: none; }
-.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+.reviews { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 28px; }
+.reviews > .review { flex: 0 1 calc((100% - 40px) / 3); }
 .reviews[hidden] { display: none; }
 .review { display: flex; flex-direction: column; gap: 12px; padding: 26px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
 .review .stars { margin: 0; }
@@ -560,7 +561,7 @@ html[lang="te"] .quote p { font-style: normal; }
 .review__avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #1a1405; background: var(--gold-grad); flex: none; }
 .review footer b { display: block; font-size: .95rem; }
 .review footer small { color: var(--muted); font-size: .82rem; }
-@media (max-width: 900px) { .reviews { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .reviews > .review { flex-basis: 100%; } }
 @media (max-width: 900px) { .social { flex-direction: column; align-items: flex-start; padding: 32px 24px; } .social__links { justify-content: flex-start; } }
 
 /* ---------- FAQ ---------- */
