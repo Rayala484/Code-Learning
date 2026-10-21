@@ -6,7 +6,7 @@
 import { mkdir, writeFile } from "node:fs/promises"
 import { dirname } from "node:path"
 
-const SOURCE_SHA = process.env.SOURCE_SHA || "893084e4b668e24033cade3f4a1575ffef8b5eff"
+const SOURCE_SHA = process.env.SOURCE_SHA || "8879de07223abcd649949a011c6d7e9581b43f45"
 const BASE = `https://raw.githubusercontent.com/rayala484/code-learning/${SOURCE_SHA}/trust-gold-services/`
 const FILES = [
   "index.html", "styles.css", "script.js", "i18n.js", "config.js",
