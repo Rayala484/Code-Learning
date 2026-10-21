@@ -25,6 +25,7 @@ window.TGS_TE = {
   "cta.whatsapp": "WhatsApp చేయండి",
   "cta.ask": "WhatsAppలో అడగండి",
   "cta.value": "ఉచిత అంచనా",
+  "bar.call": "కాల్",
 
   "hero.eyebrow": "విజయవాడలో పారదర్శక బంగారం కొనుగోలుదారు",
   "hero.title": "తాకట్టు బంగారాన్ని విడిపించుకోండి.<br /><span class=\"gold-text\">సరైన విలువ పొందండి.</span>",
