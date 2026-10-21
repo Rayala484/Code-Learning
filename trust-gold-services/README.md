@@ -2,7 +2,12 @@
 
 Static website for **Trust Gold Services**, Vijayawada (owner: V. Manohar) —
 pledged gold release from banks / NBFCs and old gold buying.
-Deployed on Netlify (project `trust-gold-services`). No build step; the live gold rate needs Netlify Functions.
+Live on Vercel: https://trust-gold-services.vercel.app (project `trust-gold-services`).
+
+**Publishing to Vercel:** the deployment uploads `vercel-build.mjs`, `vercel.json` and `api/gold-rate.mjs`.
+During the build, `vercel-build.mjs` downloads the site files from this public GitHub repository at the commit
+in `SOURCE_SHA` and Vercel serves them from `public/`. To publish changes: push to GitHub, set `SOURCE_SHA` to
+the new commit and redeploy. (The `netlify/` folder and `netlify.toml` are from the earlier Netlify hosting.)
 
 ## Files
 
@@ -13,12 +18,14 @@ Deployed on Netlify (project `trust-gold-services`). No build step; the live gol
 | `i18n.js` | Telugu translations (key → Telugu text) |
 | `styles.css` | Design — navy & gold brand colours at the top in `:root` |
 | `script.js` | Theme, language, gold rates, calculator, menu, WhatsApp form |
-| `netlify/functions/gold-rate.mts` | Live gold rate endpoint (`/api/gold-rate`) |
+| `api/gold-rate.mjs` | Live gold rate endpoint on Vercel (`/api/gold-rate`) |
+| `vercel-build.mjs`, `vercel.json` | Vercel build step and headers |
+| `netlify/functions/gold-rate.mts` | Same endpoint for the old Netlify hosting |
 | `assets/` | Logo, founder photos, favicon, social share image |
 
 ## Gold rate (updates automatically)
 
-`netlify/functions/gold-rate.mts` serves `/api/gold-rate`. It reads the live international gold
+`api/gold-rate.mjs` (Vercel) serves `/api/gold-rate`. It reads the live international gold
 price, converts it to rupees per gram and adds the Indian market premium (`INDIA_PREMIUM`,
 calibrated to Vijayawada / AP rates). Netlify caches it for 10 minutes, and open pages refresh
 it every 10 minutes, so the rate strip, rate cards, calculator and example stay current all day.
